@@ -41,14 +41,10 @@ Cada atividade está associada a um professor (`professor_id`), integrando-se ao
 
 Clone o repositório:
 
-```bash
 git clone https://github.com/MATEUS-ANTOVERE-IMPACTA/AtividadesAPI
 cd AtividadesAPI
 Execute via Docker Compose:
 
-bash
-Copiar
-Editar
 docker-compose up --build
 🌐 Acesse a aplicação
 Swagger UI: http://localhost:5002/apidocs
@@ -56,9 +52,7 @@ Swagger UI: http://localhost:5002/apidocs
 API: http://localhost:5002
 
 📂 Estrutura do Projeto
-arduino
-Copiar
-Editar
+
 AtividadesAPI/
 ├── app/
 │   ├── controllers/
