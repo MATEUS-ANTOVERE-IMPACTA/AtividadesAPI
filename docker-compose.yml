@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   atividades:
     build: .
@@ -6,4 +5,4 @@ services:
       - "5002:5002"
     volumes:
       - .:/app
-    command: python app/main.py
+    restart: always

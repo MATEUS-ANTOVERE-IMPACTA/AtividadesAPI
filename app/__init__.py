@@ -1,17 +1,32 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from config import Config
-
-db = SQLAlchemy()
+from flask import Flask, jsonify
+from flasgger import Swagger
+from .extensions import db
+from .config import DATABASE_URI, TRACK_MODIFICATIONS
+from .controllers.atividade_controller import atividade_bp  # Descomentado
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object(Config)
+
+    # Configurações
+    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = TRACK_MODIFICATIONS
+    app.config["SWAGGER"] = {
+        "title": "Atividades API - Documentação com Swagger",
+        "uiversion": 3
+    }
+
+    # Inicializa extensões
     db.init_app(app)
+    Swagger(app)
 
-    from controllers.atividade_controller import atividade_bp
-    app.register_blueprint(atividade_bp, url_prefix="/atividades")
+    # Registrar rotas
+    @app.route("/")
+    def home():
+        return jsonify({"mensagem": "Bem-vindo à API de Atividades! Documentação: /apidocs/"})
 
+    app.register_blueprint(atividade_bp, url_prefix="/atividades")  # Registra o blueprint
+
+    # Cria as tabelas no banco
     with app.app_context():
         db.create_all()
 
