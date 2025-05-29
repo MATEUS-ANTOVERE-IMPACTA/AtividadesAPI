@@ -1,115 +1,74 @@
-# API de Atividades
+# 🎓 AtividadesAPI - Microsserviço de Atividades Acadêmicas
 
-Este microsserviço é responsável pelo controle de atividades acadêmicas, vinculadas ao ID do professor fornecido pela API do Sistema de Gerenciamento.
+# O **AtividadesAPI** é um microsserviço RESTful independente, desenvolvido com **Python + Flask**, responsável por gerenciar as **atividades vinculadas aos professores**. Faz parte da arquitetura de microsserviços integrada ao sistema principal (**DevAPI**), utilizando **SQLite** como banco de dados e **Swagger** para documentação e testes.
 
-## Descrição da API
+---
 
-A API de Atividades permite:
-- Criar novas atividades acadêmicas associadas a um professor
-- Listar todas as atividades cadastradas
-- Buscar atividades por ID
-- Buscar atividades por ID do professor
+## 🚀 Funcionalidades
 
-Cada atividade contém:
-- Título
-- Descrição (opcional)
-- Data de entrega
-- ID do professor responsável
-- Data de criação
+- 📝 **Atividades**
+  - Cadastro de atividades com título, descrição e professor vinculado.
+  - Listagem de todas as atividades registradas.
+  - Validação de campos obrigatórios.
+  
+- 🔗 **Integração com Professores**
+  - Cada atividade é associada a um `professor_id`, integrando-se conceitualmente ao sistema principal (**DevAPI**).
 
-## Instruções de Execução (com Docker)
+- 📄 **Swagger**
+  - Interface amigável para testes e visualização de documentação.
+  - Disponível em: [`/apidocs`](http://localhost:5002/apidocs)
 
-### Pré-requisitos
-- Docker instalado
-- Docker Compose instalado (opcional, para execução com outros serviços)
+---
 
-### Execução Standalone
+## 🛠️ Tecnologias Utilizadas
+
+- Python 3.11
+- Flask 3.0.2
+- Flask-SQLAlchemy
+- Flasgger (Swagger UI)
+- SQLite
+- Docker & Docker Compose
+
+---
+
+## 🐳 Como Rodar com Docker
+
 1. Clone o repositório:
-```bash
-git clone https://github.com/MATEUS-ANTOVERE-IMPACTA/AtividadesAPI.git
-cd AtividadesAPI
-```
+   ```bash
+   git clone https://github.com/MATEUS-ANTOVERE-IMPACTA/AtividadesAPI
+   cd AtividadesAPI
+Inicie o container:
 
-2. Construa e execute o container:
-```bash
-docker build -t atividades-api .
-docker run -p 5001:5001 atividades-api
-```
+bash
+Copiar
+Editar
+docker-compose up --build
+Acesse:
 
-3. A API estará disponível em: http://localhost:5001
+Swagger UI: http://localhost:5002/apidocs
 
-### Execução com Docker Compose (integração completa)
-Para executar junto com os outros microsserviços:
+API: http://localhost:5002
 
-```bash
-docker-compose up
-```
+📁 Estrutura do Projeto
+arduino
+Copiar
+Editar
+AtividadesAPI/
+├── app/
+│   ├── controllers/
+│   │   └── atividade_controller.py
+│   ├── models/
+│   │   └── atividade.py
+│   ├── config.py
+│   ├── extensions.py
+│   └── main.py
+├── requirements.txt
+├── Dockerfile
+└── docker-compose.yml
+👨‍🔬 Testes
+As rotas podem ser testadas manualmente via Swagger, ou utilizando ferramentas como Postman e cURL.
 
-## Arquitetura Utilizada
-
-Este projeto segue o padrão de arquitetura MVC (Model-View-Controller):
-
-- **Model**: Representa os dados e a lógica de negócios
-  - `app/models/atividade.py`: Define a estrutura de dados e operações CRUD para atividades
-
-- **Controller**: Gerencia as requisições HTTP e coordena as respostas
-  - `app/controllers/atividade_controller.py`: Implementa as rotas da API e a lógica de validação
-
-- **View**: Implementada implicitamente através das respostas JSON da API
-
-Outras características:
-- Persistência de dados com SQLite
-- API RESTful com suporte aos verbos HTTP GET e POST
-- Conteinerização com Docker para facilitar a implantação
-
-## Ecossistema de Microsserviços
-
-Este microsserviço faz parte de um ecossistema composto por três serviços independentes:
-
-1. **Sistema de Gerenciamento** (API principal)
-   - Responsável pelo cadastro e gerenciamento de alunos, professores e turmas
-   - Fornece IDs de professores que são utilizados por este serviço
-
-2. **Reservas**
-   - Gerencia reservas de salas de aula
-   - Vinculado ao ID da turma fornecido pela API principal
-
-3. **Atividades** (este serviço)
-   - Gerencia atividades acadêmicas
-   - Vinculado ao ID do professor fornecido pela API principal
-
-### Integração entre os Serviços
-
-- Este serviço consome dados da API de Sistema de Gerenciamento para validar a existência de professores
-- A comunicação entre os serviços é feita via requisições HTTP
-- Cada serviço mantém seu próprio banco de dados, seguindo o princípio de desacoplamento de microsserviços
-- A integração é baseada em IDs compartilhados, permitindo relacionamentos entre entidades de diferentes serviços
-
-## Endpoints da API
-
-### GET /atividades
-Lista todas as atividades cadastradas.
-
-### GET /atividades/{id}
-Retorna uma atividade específica pelo ID.
-
-### GET /atividades/professor/{professor_id}
-Lista todas as atividades associadas a um professor específico.
-
-### POST /atividades
-Cria uma nova atividade.
-
-Exemplo de payload:
-```json
-{
-  "titulo": "Trabalho Final de Programação",
-  "descricao": "Implementar um sistema de gerenciamento de biblioteca",
-  "data_entrega": "2025-06-30",
-  "professor_id": 1
-}
-```
-
-Campos obrigatórios:
-- titulo
-- data_entrega
-- professor_id
+👥 Desenvolvido por
+👤 Mateus Antovere Silva Rosário | RA: 2401764
+👤 Leandro Ferreira Cassemiro Rosa | RA: 2302060
+👤 Gabriel Quaglio Monteiro Praça | RA: 2400738
